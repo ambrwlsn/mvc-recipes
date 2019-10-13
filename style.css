@@ -1,0 +1,68 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Gochi Hand, Geneva, Tahoma, serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+  color: #235ad3;
+}
+
+form {
+  text-align: center;
+}
+
+textarea {
+  border-radius: 8px;
+  width: 400px;
+  height: 200px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  font-size: 2em;
+  padding: 0.5em 0 0 0.5em;
+}
+
+textarea::placeholder {
+  padding: 10px;
+  font-size: 1em;
+  padding: 0;
+}
+
+.recipe_button {
+  display: block;
+  -webkit-appearance: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #235ad3;
+  color: white;
+  border: 2px solid #235ad3;
+  margin: 0 auto;
+  margin-top: 0.5em;
+}
+
+.all-recipes {
+  display: flex;
+}
+
+.recipe-block {
+  width: 250px;
+  height: 300px;
+  border: 2px solid black;
+  border-radius: 8px;
+  margin: 1em;
+}
+
+.method {
+  padding: 1em;
+  font-size: 1.2em;
+}
