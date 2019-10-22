@@ -183,7 +183,7 @@ class View {
 
     // Show default message when there are no recipes
     if (recipes.length === 0) {
-      const paragraph = this.createElement('p')
+      const paragraph = this.createElement('p', 'empty-state')
       paragraph.textContent = "Wanna get cookin'? Add a recipe!"
       this.allRecipes.append(paragraph)
     } else {

@@ -52,6 +52,7 @@ textarea::placeholder {
 
 .all-recipes {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .recipe-block {
@@ -65,4 +66,9 @@ textarea::placeholder {
 .method {
   padding: 1em;
   font-size: 1.2em;
+}
+
+.empty-state {
+  margin: 1em auto;
+  font-size: 3em;
 }
