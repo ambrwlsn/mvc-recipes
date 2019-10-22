@@ -18,22 +18,31 @@
 
 class Model {
   constructor() {
+    // fetches from local storage
+    this.recipes = JSON.parse(localStorage.getItem('recipes')) || []
+
     // The state of the model, an array of recipe objects,
     // prepopulated with some data
-    this.recipes = [
-      {
-        id: 1,
-        ingredients: ['chilli', 'garlic', 'rice'],
-        method: 'fry chilli and garlic in pan, cook rice in water',
-        time: '15',
-      },
-      {
-        id: 2,
-        ingredients: ['banana', 'custard', 'cinnamon'],
-        method: 'slice bananas, warm custard, and sprinkle cinnamon',
-        time: '7',
-      },
-    ]
+    // this.recipes = [
+    //   {
+    //     id: 1,
+    //     ingredients: ['chilli', 'garlic', 'rice'],
+    //     method: 'fry chilli and garlic in pan, cook rice in water',
+    //     time: '15',
+    //   },
+    //   {
+    //     id: 2,
+    //     ingredients: ['banana', 'custard', 'cinnamon'],
+    //     method: 'slice bananas, warm custard, and sprinkle cinnamon',
+    //     time: '7',
+    //   },
+    // ]
+  }
+
+  // commits to local storage
+  _commit(recipes) {
+    this.onRecipesChanged(recipes)
+    localStorage.setItem('recipes', JSON.stringify(recipes))
   }
 
   bindRecipesChanged(callback) {
@@ -55,6 +64,9 @@ class Model {
     this.recipes.push(recipe)
     this.onRecipesChanged(this.recipes)
     // console.log(ingredients)
+
+    // commits changes to local storage
+    this._commit(this.recipes)
   }
 
   // Map through all recipes, and replace the ingredients of recipe with the
@@ -65,6 +77,9 @@ class Model {
         ? { id: recipe.id, ingredients: updatedIngredients }
         : recipe
     )
+
+    // commits changes to local storage
+    this._commit(this.recipes)
   }
 
   // Map through all recipes, and replace the method of recipe with the
@@ -73,12 +88,18 @@ class Model {
     this.recipes = this.recipes.map(recipe =>
       recipe.id === id ? { id: recipe.id, method: updatedMethod } : recipe
     )
+
+    // commits changes to local storage
+    this._commit(this.recipes)
   }
 
   // Use the filter method to filter a recipe out of the recipes array by
   // targeting its id, so we can delete it
   deleteRecipe(id) {
     this.recipes = this.recipes.filter(recipe => recipe.id !== id)
+
+    // commits changes to local storage
+    this._commit(this.recipes)
   }
 }
 
