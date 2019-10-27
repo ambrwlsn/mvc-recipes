@@ -63,7 +63,6 @@ class Model {
     // add the new recipe onto the existing array of recipe object(s)
     this.recipes.push(recipe)
     this.onRecipesChanged(this.recipes)
-    // console.log(ingredients)
 
     // commits changes to local storage
     this._commit(this.recipes)
@@ -210,6 +209,7 @@ class View {
     } else {
       recipes.forEach(recipe => {
         const recipeBlock = this.createElement('div', 'recipe-block')
+        recipeBlock.id = recipe.id
         const ingredientWrapper = this.createElement('ul')
         const methodWrapper = this.createElement('p', 'method')
 
@@ -221,7 +221,9 @@ class View {
 
         methodWrapper.append(methodText)
 
-        console.log(recipe.ingredients)
+        // Each recipe will also have a delete button
+        const deleteButton = this.createElement('button', 'delete')
+        deleteButton.textContent = 'Delete'
 
         recipe.ingredients.forEach(ingredient => {
           const li = this.createElement('li')
@@ -236,7 +238,8 @@ class View {
           ingredientWrapper.append(li)
         })
 
-        recipeBlock.append(ingredientWrapper, methodWrapper)
+        recipeBlock.append(ingredientWrapper, methodWrapper, deleteButton)
+
         this.allRecipes.append(recipeBlock)
       })
     }
@@ -253,6 +256,31 @@ class View {
       }
     })
   }
+
+  // adds event listener to entire recipe block wrapper so that the event
+  // listener is always there to listen for button clicks
+  bindDeleteRecipe(handler) {
+    this.allRecipes.addEventListener('click', event => {
+      if (event.target.className === 'delete') {
+        const id = parseInt(event.target.parentElement.id)
+
+        handler(id)
+      }
+    })
+  }
+
+  // alternately the event listener can be attached to all the delete buttons
+  // but the moment a recipe is created, the model will not know to add this
+  // event listener, rather the page will need a refresh.
+  //
+  // bindDeleteRecipe(handler) {
+  //   this.allRecipes.querySelectorAll('.delete').forEach(deleteButton =>
+  //     deleteButton.addEventListener('click', event => {
+  //       const id = parseInt(event.target.id)
+  //       handler(id)
+  //     })
+  //   )
+  // }
 }
 
 /**
@@ -272,15 +300,24 @@ class Controller {
 
     // Display initial recipes
     this.onRecipesChanged(this.model.recipes)
+
     this.view.bindAddRecipe(this.handleAddRecipe)
+
+    //needed only if event listeners were to be added directly to buttons.
+    this.view.bindDeleteRecipe(this.handleDeleteRecipe)
   }
 
   onRecipesChanged = recipes => {
     this.view.displayRecipes(recipes)
+    this.view.bindDeleteRecipe(this.handleDeleteRecipe)
   }
 
   handleAddRecipe = (recipeIngredients, recipeMethod) => {
     this.model.addRecipe(recipeIngredients, recipeMethod)
+  }
+
+  handleDeleteRecipe = id => {
+    this.model.deleteRecipe(id)
   }
 
   // handleEditIngredients = (id, updatedIngredients) => {
