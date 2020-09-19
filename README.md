@@ -3,7 +3,10 @@
 
 A recipe MVC application in plain JavaScript, based on Tania Rascia's tutorial below:
 
-### [Read the tutorial](https://www.taniarascia.com/javascript-mvc-todo-app) | [View the demo](https://taniarascia.github.io/mvc)
+### [View my demo](https://mvc-recipes.netlify.app).
+
+### [Read Tania's tutorial](https://www.taniarascia.com/javascript-mvc-todo-app) | [View Tania's demo](https://taniarascia.github.io/mvc)
+
 
 ## Purpose
 
