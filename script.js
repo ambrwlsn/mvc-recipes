@@ -118,6 +118,10 @@ class View {
     this.title = this.createElement('h1');
     this.title.textContent = 'MVC Recipes' + ' ' + '🥕';
 
+    this.description = this.createElement('p', 'description');
+    this.description.textContent =
+      'Save/edit/remove your favourite recipes (thanks to local storage) with the click of a button!';
+
     // The recipe form, with a [type="text"] input, and a submit button
     this.form = this.createElement('form');
     this.form.method = 'post';
@@ -157,7 +161,7 @@ class View {
     this.form.append(this.ingredientLabel, this.methodLabel, this.submitButton);
 
     // Append the title, form, and recipes to the app
-    this.app.append(this.title, this.form, this.allRecipes);
+    this.app.append(this.title, this.description, this.form, this.allRecipes);
   }
   // Create an element with an optional CSS class
   createElement(tag, className) {
@@ -210,7 +214,7 @@ class View {
       recipes.forEach((recipe) => {
         const recipeBlock = this.createElement('div', 'recipe-block');
         recipeBlock.id = recipe.id;
-        const ingredientWrapper = this.createElement('ul');
+        const ingredientWrapper = this.createElement('ul', 'recipe-list');
         const methodWrapper = this.createElement('p', 'method');
 
         const methodText = this.createElement('span');
@@ -222,7 +226,7 @@ class View {
         methodWrapper.append(methodText);
 
         // Each recipe will also have a delete button
-        const deleteButton = this.createElement('button', 'delete');
+        const deleteButton = this.createElement('button', 'delete-button');
         deleteButton.textContent = 'Delete';
 
         recipe.ingredients.forEach((ingredient) => {
@@ -261,7 +265,7 @@ class View {
   // listener is always there to listen for button clicks
   bindDeleteRecipe(handler) {
     this.allRecipes.addEventListener('click', (event) => {
-      if (event.target.className === 'delete') {
+      if (event.target.className === 'delete-button') {
         const id = parseInt(event.target.parentElement.id);
 
         handler(id);
